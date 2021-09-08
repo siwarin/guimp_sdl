@@ -8,7 +8,12 @@
 
 typedef struct		s_keyboard
 {
-	const Uint8	*state;
+	const Uint8	 *key;
+	int	mx;
+	int my;
+	int mxr;
+	int myr;
+	char mb[8];
 }			t_keyboard;
 
 typedef struct		s_fps
@@ -32,7 +37,10 @@ typedef struct		s_sdl
 	int		color;
 }			t_sdl;
 
-int	hook_keydown(t_sdl *sdl);
+
+void	midPointCircleDraw(t_sdl *sdl, int x_center, int y_center, int r);
+void	midPointCircleDrawR(t_sdl *sdl, int x_center, int y_center, int r);
+int		hook_keydown(t_sdl *sdl);
 void	draw(t_sdl *sdl);
 //void	drawrect(t_sdl *sdl, int x, int y, int v, int w);
 void	pixel(t_sdl *sdl);
