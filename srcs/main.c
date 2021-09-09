@@ -40,7 +40,9 @@ void    ft_init(t_sdl *sdl)
 
 void    main_loop(t_sdl *sdl)
 {
-	//ft_memset(&sdl->k, 0, sizeof(sdl->k));
+	int i;
+
+	i = 0;
 
 	while (1)
 	{
@@ -69,9 +71,12 @@ void    main_loop(t_sdl *sdl)
 				case SDL_MOUSEBUTTONDOWN:
 					sdl->x = sdl->k.mx;
 					sdl->y = sdl->k.my;
-					midPointCircleDrawR(sdl, sdl->x, sdl->y, 200); // changer le 200 par le mouvement de la souris
-					SDL_UpdateWindowSurface(sdl->win); 
+					i = mousemotioncalcul(sdl); //ca doit renvoyer un int
 					break;
+				case SDL_MOUSEBUTTONUP:
+					midPointCircleDrawR(sdl, sdl->k.mx, sdl->k.my, 200); // changer le 200 par le mouvement de la souris
+					SDL_UpdateWindowSurface(sdl->win);
+				   	break;	
 			}
 
 		}
