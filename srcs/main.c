@@ -40,7 +40,7 @@ void    ft_init(t_sdl *sdl)
 
 void    main_loop(t_sdl *sdl)
 {
-	ft_memset(&sdl->k, 0, sizeof(sdl->k));
+	//ft_memset(&sdl->k, 0, sizeof(sdl->k));
 
 	while (1)
 	{
@@ -55,29 +55,23 @@ void    main_loop(t_sdl *sdl)
 				case SDL_KEYDOWN:
 					switch(sdl->e.key.keysym.sym)
 					{
-						ft_putchar('d');
 						case SDLK_ESCAPE:
 							hook_keydown(sdl);
+							break;
 					}
+
 				case SDL_MOUSEMOTION:
-					ft_putchar('e');
 					sdl->k.mx = sdl->e.motion.x;
 					sdl->k.my = sdl->e.motion.y;
 					sdl->k.mxr = sdl->e.motion.xrel;
 					sdl->k.myr = sdl->e.motion.yrel;
 					break;
 				case SDL_MOUSEBUTTONDOWN:
-					/*switch(sdl->e.key.keysym.sym)
-					{*/
-						ft_putchar('f');
-						sdl->x = sdl->k.mx;
-						ft_putnbr(sdl->x);
-						ft_putchar('\n');
-						sdl->y = sdl->k.my;
-						ft_putnbr(sdl->y);
-						ft_putchar('\n');
-						midPointCircleDrawR(sdl, sdl->x, sdl->y, 200);
-					//}	seule la fonction ne fonctionne pas dans cette boucle
+					sdl->x = sdl->k.mx;
+					sdl->y = sdl->k.my;
+					midPointCircleDrawR(sdl, sdl->x, sdl->y, 200); // changer le 200 par le mouvement de la souris
+					SDL_UpdateWindowSurface(sdl->win); 
+					break;
 			}
 
 		}
