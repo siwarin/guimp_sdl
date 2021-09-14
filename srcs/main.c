@@ -12,6 +12,16 @@ int             hook_keydown(t_sdl *sdl)
 	return (0);
 }
 
+int		mousemotioncalcul(t_sdl *sdl)
+{
+	double i;
+	double j;
+
+	i = sdl->x - sdl->k.mx;
+	j = sdl->y - sdl->k.my;
+	return ((int)hypot(i, j));
+}
+
 void    ft_init(t_sdl *sdl)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0)
@@ -71,10 +81,10 @@ void    main_loop(t_sdl *sdl)
 				case SDL_MOUSEBUTTONDOWN:
 					sdl->x = sdl->k.mx;
 					sdl->y = sdl->k.my;
-					i = mousemotioncalcul(sdl); //ca doit renvoyer un int
 					break;
 				case SDL_MOUSEBUTTONUP:
-					midPointCircleDrawR(sdl, sdl->k.mx, sdl->k.my, 200); // changer le 200 par le mouvement de la souris
+					i = mousemotioncalcul(sdl);
+					midPointCircleDrawR(sdl, sdl->x, sdl->y, i);
 					SDL_UpdateWindowSurface(sdl->win);
 				   	break;	
 			}
