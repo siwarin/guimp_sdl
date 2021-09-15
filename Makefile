@@ -6,7 +6,7 @@
 #    By: cduverge <cduverge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/23 17:18:33 by cduverge          #+#    #+#              #
-#    Updated: 2021/09/08 16:00:11 by siwarin          ###   ########.fr        #
+#    Updated: 2021/09/15 10:07:42 by siwarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME = guimp
 
-SRC = srcs/main.c srcs/graphics.c srcs/pixel.c srcs/mid-point_circle.c	
+SRC = srcs/main.c srcs/graphics.c srcs/pixel.c srcs/mid-point_circle.c srcs/floodfill.c	
 
 OBJ = $(SRC:.c=.o)
 

@@ -53,6 +53,7 @@ void    main_loop(t_sdl *sdl)
 	int i;
 
 	i = 0;
+	sdl->j = 0;
 
 	while (1)
 	{
@@ -70,6 +71,12 @@ void    main_loop(t_sdl *sdl)
 						case SDLK_ESCAPE:
 							hook_keydown(sdl);
 							break;
+						case SDLK_a:
+							sdl->i = 0;
+							break;
+						case SDLK_z:
+							sdl->i = 1;
+							break;
 					}
 
 				case SDL_MOUSEMOTION:
@@ -81,10 +88,15 @@ void    main_loop(t_sdl *sdl)
 				case SDL_MOUSEBUTTONDOWN:
 					sdl->x = sdl->k.mx;
 					sdl->y = sdl->k.my;
+					if (sdl->i == 1)
+						sdl->colortemp = getpixel(sdl, sdl->x, sdl->y);
 					break;
 				case SDL_MOUSEBUTTONUP:
 					i = mousemotioncalcul(sdl);
-					midPointCircleDrawR(sdl, sdl->x, sdl->y, i);
+					if (sdl->i == 0)
+						midPointCircleDraw(sdl, sdl->x, sdl->y, i);
+					if (sdl->i == 1)
+						floodfill(sdl, sdl->x, sdl->y);
 					SDL_UpdateWindowSurface(sdl->win);
 				   	break;	
 			}

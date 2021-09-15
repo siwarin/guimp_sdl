@@ -35,6 +35,9 @@ typedef struct		s_sdl
 	int		x;
 	int		y;
 	int		color;
+	int		colortemp;
+	int		i;
+	int		j;
 }			t_sdl;
 
 
@@ -45,7 +48,9 @@ void	draw(t_sdl *sdl);
 //void	drawrect(t_sdl *sdl, int x, int y, int v, int w);
 void	pixel(t_sdl *sdl);
 void	pixelm(t_sdl *sdl, int x, int y);
-
+void	floodfill(t_sdl *sdl, int x, int y);
+Uint32	getpixel(t_sdl *sdl, int x, int y); // dans floodfill.c
+void    floodfills(t_sdl *sdl, int x1, int x2, int y);
 /*
 ** macro des fenetres et boutons
 */
