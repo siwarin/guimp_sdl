@@ -6,6 +6,16 @@
 # define WIDTH	1300
 # define HEIGTH	850
 
+typedef struct		s_lst
+{
+	int n;
+	int w;
+	int s;
+	int e;
+	int q;
+	struct t_lst *next;
+}					t_lst;
+
 typedef struct		s_keyboard
 {
 	const Uint8	 *key;
@@ -38,6 +48,7 @@ typedef struct		s_sdl
 	int		colortemp;
 	int		i;
 	int		j;
+	int		ki;
 }			t_sdl;
 
 

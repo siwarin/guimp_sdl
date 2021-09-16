@@ -54,7 +54,7 @@ void    main_loop(t_sdl *sdl)
 
 	i = 0;
 	sdl->j = 0;
-
+	sdl->ki = 0;
 	while (1)
 	{
 		sdl->f.last = sdl->f.current;
