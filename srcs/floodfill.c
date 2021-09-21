@@ -6,20 +6,50 @@ Uint32	getpixel(t_sdl *sdl, int x, int y)
 	return *(Uint32 *)p;
 }
 
+void	clearscreen(t_sdl *sdl)
+{
+	int x = 0;
+	int y = 0;
+
+	sdl->color = BLACK;
+	while (y <= HEIGTH)
+	{
+		x = 0;
+		while(x <= WIDTH)
+		{
+			pixelm(sdl, x, y);
+			x++;
+		}
+		y++;
+	}
+	sdl->color = WHITE;
+}
+
 void	floodfill(t_sdl *sdl, int x, int y)
 {
+
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGTH)
 		return ;
 	if (getpixel(sdl, x, y) == sdl->color)
 		return ;
-	if (getpixel(sdl, x, y) == sdl->colortemp)
+
+	ft_lstnew(	
+	//chain list
+	while (sdl->l.n == 0 && sdl->l.w == 0 && sdl->l.s == 0 && sdl->l.e == 0)
+	{
+		pixelm(sdl, x, y);
+		if (getpixel(sdl, x + sdl->l.x, y + sdl->l.y - 1) == sdl->colortemp)
+	}
+
+
+	/*if (getpixel(sdl, x, y) == sdl->colortemp) //floodfill 4 ways qui overflow
 	{
 		pixelm(sdl, x, y);
 		floodfill(sdl, x + 1, y);
 		floodfill(sdl, x, y + 1);
 		floodfill(sdl, x - 1, y);
 		floodfill(sdl, x, y - 1);
-	}
+	}*/
 }
 
 void	floodfills(t_sdl *sdl, int x1, int x2, int y) // recursive scanline

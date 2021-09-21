@@ -13,6 +13,8 @@ typedef struct		s_lst
 	int s;
 	int e;
 	int q;
+	int	x;
+	int y;
 	struct t_lst *next;
 }					t_lst;
 
@@ -42,6 +44,7 @@ typedef struct		s_sdl
 	SDL_Event	e;
 	t_keyboard	k;
 	t_fps		f;
+	t_lst		l;
 	int		x;
 	int		y;
 	int		color;
@@ -62,6 +65,7 @@ void	pixelm(t_sdl *sdl, int x, int y);
 void	floodfill(t_sdl *sdl, int x, int y);
 Uint32	getpixel(t_sdl *sdl, int x, int y); // dans floodfill.c
 void    floodfills(t_sdl *sdl, int x1, int x2, int y);
+void    clearscreen(t_sdl *sdl);
 /*
 ** macro des fenetres et boutons
 */

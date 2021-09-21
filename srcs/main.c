@@ -77,6 +77,10 @@ void    main_loop(t_sdl *sdl)
 						case SDLK_z:
 							sdl->i = 1;
 							break;
+						case SDLK_c:
+							clearscreen(sdl);
+							sdl->i = -1;
+							break;
 					}
 
 				case SDL_MOUSEMOTION:
@@ -110,7 +114,8 @@ void    main_loop(t_sdl *sdl)
 int		main(int argc, char **argv)
 {
 	t_sdl	sdl;
-
+	
+	sdl.l.next = NULL;
 	ft_init(&sdl);
 	main_loop(&sdl);
 	return (0);
