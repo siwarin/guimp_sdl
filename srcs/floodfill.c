@@ -33,7 +33,7 @@ void	floodfill(t_sdl *sdl, int x, int y)
 	if (getpixel(sdl, x, y) == sdl->color)
 		return ;
 
-	ft_lstnew(	
+	ft_lstnew(
 	//chain list
 	while (sdl->l.n == 0 && sdl->l.w == 0 && sdl->l.s == 0 && sdl->l.e == 0)
 	{

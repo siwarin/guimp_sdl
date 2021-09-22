@@ -77,7 +77,10 @@ SRCS = ft_atoi.c \
 			ft_strncmp.c \
 			ft_strncpy.c \
 			ft_strnstr.c \
-			ft_strstr.c
+			ft_strstr.c \
+			ft_lstlast.c \
+			ft_lstadd_back.c \
+			ft_lstsize.c
 OBJ = ft_atoi.o \
 	  ft_swap.o \
 	  ft_power.o \
@@ -143,7 +146,10 @@ OBJ = ft_atoi.o \
 	  ft_strncmp.o \
 	  ft_strncpy.o \
 	  ft_strnstr.o \
-	  ft_strstr.o
+	  ft_strstr.o \
+	  ft_lstlast.o \
+	  ft_lstadd_back.o \
+	  ft_lstsize.o
 
 all: $(NAME)
 
