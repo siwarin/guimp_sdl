@@ -27,18 +27,38 @@ void	clearscreen(t_sdl *sdl)
 
 void	floodfill(t_sdl *sdl, int x, int y)
 {
-
+	t_list	l = NULL;
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGTH)
 		return ;
 	if (getpixel(sdl, x, y) == sdl->color)
 		return ;
 
-	ft_lstnew(
+	l = ft_lstnew(sdl);
+	ft_lstadd(sdl->l, l);
+	sdl->l.x = x;
+	sdl->l.y = y;
 	//chain list
-	while (sdl->l.n == 0 && sdl->l.w == 0 && sdl->l.s == 0 && sdl->l.e == 0)
+	while (sdl->l.n == 0) // && sdl->l.w == 0 && sdl->l.s == 0 && sdl->l.e == 0)
 	{
 		pixelm(sdl, x, y);
-		if (getpixel(sdl, x + sdl->l.x, y + sdl->l.y - 1) == sdl->colortemp)
+		while (getpixel(sdl, x + sdl->l.x, y + sdl->l.y - 1) == sdl->colortemp)
+		{
+			l = ft_lstnew(sdl);
+			ft_lstadd(sdl->l, l);
+			sdl->l.y -= 1;
+		}
+		/*while (getpixel(sdl, x + sdl->l.x - 1, y + sdl->l.y) == sdl->colortemp)
+		{
+
+		}
+		while (getpixel(sdl, x + sdl->l.x, y + sdl->l.y + 1) == sdl->colortemp)
+		{
+
+		}
+		while (getpixel(sdl, x + sdl->l.x + 1, y + sdl->l.y) == sdl->colortemp)
+		{
+
+		}*/
 	}
 
 
@@ -52,7 +72,7 @@ void	floodfill(t_sdl *sdl, int x, int y)
 	}*/
 }
 
-void	floodfills(t_sdl *sdl, int x1, int x2, int y) // recursive scanline
+/*void	floodfills(t_sdl *sdl, int x1, int x2, int y) // recursive scanline
 {
 	int xl, xr;
 	if ((y < 0 || y >= HEIGTH) || (getpixel(sdl, x2, y) == sdl->color))
@@ -131,4 +151,4 @@ void	floodfills(t_sdl *sdl, int x1, int x2, int y) // recursive scanline
 		}
 		xr++;
 	}
-}
+}*/

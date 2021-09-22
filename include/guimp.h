@@ -6,18 +6,6 @@
 # define WIDTH	1300
 # define HEIGTH	850
 
-typedef struct		s_lst
-{
-	int n;
-	int w;
-	int s;
-	int e;
-	int q;
-	int	x;
-	int y;
-	struct t_lst *next;
-}					t_lst;
-
 typedef struct		s_keyboard
 {
 	const Uint8	 *key;
@@ -37,6 +25,18 @@ typedef struct		s_fps
 	double	count;
 }			t_fps;
 
+typedef struct		s_list
+{
+	int n;
+	int w;
+	int s;
+	int e;
+	int q;
+	int	x;
+	int y;
+	struct t_list *next;
+}					t_list;
+
 typedef struct		s_sdl
 {
 	SDL_Window	*win;
@@ -44,7 +44,7 @@ typedef struct		s_sdl
 	SDL_Event	e;
 	t_keyboard	k;
 	t_fps		f;
-	t_lst		l;
+	t_list		l;
 	int		x;
 	int		y;
 	int		color;
@@ -66,6 +66,10 @@ void	floodfill(t_sdl *sdl, int x, int y);
 Uint32	getpixel(t_sdl *sdl, int x, int y); // dans floodfill.c
 void    floodfills(t_sdl *sdl, int x1, int x2, int y);
 void    clearscreen(t_sdl *sdl);
+t_list	*lstnew(t_sdl *sdl);
+void	lstadd(t_list **alst, t_list *new);
+void	lstdelone(t_list **alst, void (*del)(void *, size_t));
+void	ft_lstdel(t_sdl *sdl, t_list **alst);
 /*
 ** macro des fenetres et boutons
 */
