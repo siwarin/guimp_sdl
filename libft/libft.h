@@ -15,11 +15,11 @@
 
 # include <string.h>
 
-typedef struct	s_list {
+typedef struct	s_liste {
 	void			*content;
 	size_t			content_size;
-	struct s_list	*next;
-}				t_list;
+	struct s_liste	*next;
+}				t_liste;
 
 void			ft_swap(int *a, int *b);
 int				ft_power(int nb, int power);
@@ -29,15 +29,15 @@ int				ft_count_words(char const *str, char c);
 int				ft_is_sort(int *tab, int lenght, int (*f)(int, int));
 char			*ft_strrev(char *str);
 char			*ft_strcapitalize(char *str);
-t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-void			ft_lstadd(t_list **alst, t_list *mdr);
-void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-int				ft_lstsize(t_list *lst);
-t_list			*ft_lstnew(void const *content);
-void			ft_lstadd_back(t_list **alst, t_list *new);
-t_list			*ft_lstlast(t_list *lst);
+t_liste			*ft_lstmap(t_liste *lst, t_liste *(*f)(t_liste *elem));
+void			ft_lstiter(t_liste *lst, void (*f)(t_liste *elem));
+void			ft_lstadd(t_liste **alst, t_liste *mdr);
+void			ft_lstdel(t_liste **alst, void (*del)(void *, size_t));
+void			ft_lstdelone(t_liste **alst, void (*del)(void *, size_t));
+int				ft_lstsize(t_liste *lst);
+t_liste			*ft_lstnew(void const *content);
+void			ft_lstadd_back(t_liste **alst, t_liste *new);
+t_liste			*ft_lstlast(t_liste *lst);
 char			*ft_itoa(int i);
 char			*ft_strtrim(char const *s);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));

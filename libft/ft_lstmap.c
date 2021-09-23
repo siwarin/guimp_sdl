@@ -13,9 +13,9 @@
 #include <stdlib.h>
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+t_liste	*ft_lstmap(t_liste *lst, t_liste *(*f)(t_liste *elem))
 {
-	t_list *res;
+	t_liste *res;
 
 	if (!(lst) || !(f))
 		return (NULL);

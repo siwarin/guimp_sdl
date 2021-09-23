@@ -1,12 +1,12 @@
 #include "../include/guimp.h"
 
-Uint32	getpixel(t_sdl *sdl, int x, int y)
+Uint32	getpixel(t_sdl *sdl, int x, int y) //récupération de la couleur du pixel actuel
 {
 	Uint8 *p = (Uint8 *)sdl->ren->pixels + y * sdl->ren->pitch + x * 4;
 	return *(Uint32 *)p;
 }
 
-void	clearscreen(t_sdl *sdl)
+void	clearscreen(t_sdl *sdl) // fush total de l'écran
 {
 	int x = 0;
 	int y = 0;
@@ -25,27 +25,27 @@ void	clearscreen(t_sdl *sdl)
 	sdl->color = WHITE;
 }
 
-void	floodfill(t_sdl *sdl, int x, int y)
+void	floodfill(t_sdl *sdl, int x, int y) // outil pot de peinture (a finir)
 {
-	t_list	l = NULL;
+	t_list	*l = NULL;
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGTH)
 		return ;
 	if (getpixel(sdl, x, y) == sdl->color)
 		return ;
 
-	l = ft_lstnew(sdl);
-	ft_lstadd(sdl->l, l);
-	sdl->l.x = x;
-	sdl->l.y = y;
+	l = lstnew(sdl, x, y);
+	lstadd(&sdl->l, l);
 	//chain list
-	while (sdl->l.n == 0) // && sdl->l.w == 0 && sdl->l.s == 0 && sdl->l.e == 0)
+	while (sdl->l->n == 0) // && sdl->l.w == 0 && sdl->l.s == 0 && sdl->l.e == 0)
 	{
+		//pointeurs a bidouiller, probablement pas les bonnes déclarations
 		pixelm(sdl, x, y);
-		while (getpixel(sdl, x + sdl->l.x, y + sdl->l.y - 1) == sdl->colortemp)
+		while (getpixel(sdl, x + sdl->l->e, y + sdl->l->y - 1) == sdl->colortemp)
 		{
-			l = ft_lstnew(sdl);
-			ft_lstadd(sdl->l, l);
-			sdl->l.y -= 1;
+			sdl->l->n = 1; 
+			l = lstnew(sdl, l->x, l->y - 1);
+			lstadd(&sdl->l, l);
+			pixelm(sdl, l->x, l->y);
 		}
 		/*while (getpixel(sdl, x + sdl->l.x - 1, y + sdl->l.y) == sdl->colortemp)
 		{
@@ -60,6 +60,8 @@ void	floodfill(t_sdl *sdl, int x, int y)
 
 		}*/
 	}
+	lstdel(sdl, &l);
+	lstdel(sdl, &sdl->l);
 
 
 	/*if (getpixel(sdl, x, y) == sdl->colortemp) //floodfill 4 ways qui overflow

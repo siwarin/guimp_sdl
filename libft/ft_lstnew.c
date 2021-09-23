@@ -13,9 +13,9 @@
 #include <stdlib.h>
 #include "libft.h"
 
-t_list *ft_lstnew(void *content)
+t_liste *ft_lstnew(void *content)
 {
-	t_list	*elt;
+	t_liste	*elt;
 
 	if (!(elt = (t_list*)malloc(sizeof(*elt))))
 		return (NULL);

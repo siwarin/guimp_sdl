@@ -1,6 +1,6 @@
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_liste	*ft_lstlast(t_liste *lst)
 {
 	if (!lst)
 		return (NULL);

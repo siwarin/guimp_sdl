@@ -25,14 +25,14 @@ typedef struct		s_fps
 	double	count;
 }			t_fps;
 
-typedef struct		s_list
+typedef struct		s_list //structure pour floodfill
 {
-	int n;
-	int w;
-	int s;
-	int e;
-	int q;
-	int	x;
+	int n; // north
+	int w; // west
+	int s; // south
+	int e; // east
+	int q; // compteur pour le nombre d'itération
+	int	x; // coordonnées graphique du noeud en question
 	int y;
 	struct t_list *next;
 }					t_list;
@@ -44,7 +44,7 @@ typedef struct		s_sdl
 	SDL_Event	e;
 	t_keyboard	k;
 	t_fps		f;
-	t_list		l;
+	t_list		*l;
 	int		x;
 	int		y;
 	int		color;
@@ -54,22 +54,36 @@ typedef struct		s_sdl
 	int		ki;
 }			t_sdl;
 
-
+// mid-pointcircle.c
 void	midPointCircleDraw(t_sdl *sdl, int x_center, int y_center, int r);
 void	midPointCircleDrawR(t_sdl *sdl, int x_center, int y_center, int r);
+
+// main.c
 int		hook_keydown(t_sdl *sdl);
-void	draw(t_sdl *sdl);
-//void	drawrect(t_sdl *sdl, int x, int y, int v, int w);
+int		mousemotioncalcul(t_sdl *sdl);
+void    ft_init(t_sdl *sdl);
+void    main_loop(t_sdl *sdl);
+
+// pixel.c 
 void	pixel(t_sdl *sdl);
 void	pixelm(t_sdl *sdl, int x, int y);
+
+// floodfill.c
 void	floodfill(t_sdl *sdl, int x, int y);
-Uint32	getpixel(t_sdl *sdl, int x, int y); // dans floodfill.c
-void    floodfills(t_sdl *sdl, int x1, int x2, int y);
+Uint32	getpixel(t_sdl *sdl, int x, int y);
+void    floodfills(t_sdl *sdl, int x1, int x2, int y); // non utilisé
 void    clearscreen(t_sdl *sdl);
-t_list	*lstnew(t_sdl *sdl);
+
+//chainlist.c
+t_list	*lstnew(t_sdl *sdl, int i, int j);
 void	lstadd(t_list **alst, t_list *new);
-void	lstdelone(t_list **alst, void (*del)(void *, size_t));
-void	ft_lstdel(t_sdl *sdl, t_list **alst);
+void	lstdelone(t_sdl *sdl, t_list **alst);
+void	lstdel(t_sdl *sdl, t_list **alst);
+
+// non utilisé
+void	draw(t_sdl *sdl);
+void	drawrect(t_sdl *sdl, int x, int y, int v, int w);
+
 /*
 ** macro des fenetres et boutons
 */
