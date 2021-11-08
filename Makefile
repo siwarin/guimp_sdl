@@ -14,7 +14,12 @@
 
 NAME = guimp
 
-SRC = srcs/main.c srcs/graphics.c srcs/pixel.c srcs/mid-point_circle.c srcs/floodfill.c srcs/chainlist.c	
+SRC = srcs/main.c \
+		srcs/graphics.c \
+		srcs/pixel.c \
+		srcs/mid-point_circle.c \
+		srcs/floodfill.c \
+		srcs/chainlist.c	
 
 OBJ = $(SRC:.c=.o)
 

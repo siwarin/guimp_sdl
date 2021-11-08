@@ -1,156 +1,192 @@
 #include "../include/guimp.h"
 
-Uint32	getpixel(t_sdl *sdl, int x, int y) //récupération de la couleur du pixel actuel
+struct		s_list //structure pour floodfill
 {
-	Uint8 *p = (Uint8 *)sdl->ren->pixels + y * sdl->ren->pitch + x * 4;
-	return *(Uint32 *)p;
+	int q; // compteur
+	int	x; // coordonnées graphique du noeud en question
+	int y;
+	struct s_list *next;
+}					*l;
+
+struct s_list  *lstnew(int i, int j) 
+{
+	struct s_list	*li;
+	if (!(li = (struct s_list*)malloc(sizeof(struct s_list))))
+		return (NULL);
+    li->x = i;
+    li->y = j;
+	return (li);
 }
 
-void	clearscreen(t_sdl *sdl) // fush total de l'écran
+void	lstadd(int x, int y)
 {
-	int x = 0;
-	int y = 0;
-
-	sdl->color = BLACK;
-	while (y <= HEIGTH)
+	struct s_list *new;
+	if (!l)
 	{
-		x = 0;
-		while(x <= WIDTH)
-		{
-			pixelm(sdl, x, y);
-			x++;
-		}
-		y++;
+		l = new;
+		return ;
 	}
-	sdl->color = WHITE;
+	new = lstnew(x, y);
+	new->q = l->q + 1;
+	new->next = l;
+	l = new;
+}
+
+void	lstdelfirst()
+{
+	struct s_list  *del = l;
+    l = l->next;
+	l->q = del->q - 1;
+	free(del);
+}
+
+void	lstdel()
+{
+	struct s_list *last;	
+	while (l != NULL)
+	{
+		last = l;
+		l = l->next;
+		free(last);
+	}
+}
+
+int		verif(int x, int y)
+{
+	if (x < 0 || x > WIDTH || y < 0 || y > HEIGTH)
+		return (-1);
+	return (0);
 }
 
 void	floodfill(t_sdl *sdl, int x, int y) // outil pot de peinture (a finir)
 {
-	t_list	*l = NULL;
+	int i;
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGTH)
 		return ;
 	if (getpixel(sdl, x, y) == sdl->color)
 		return ;
-
-	l = lstnew(sdl, x, y);
-	lstadd(&sdl->l, l);
-	//chain list
-	while (sdl->l->n == 0) // && sdl->l.w == 0 && sdl->l.s == 0 && sdl->l.e == 0)
-	{
-		//pointeurs a bidouiller, probablement pas les bonnes déclarations
-		pixelm(sdl, x, y);
-		while (getpixel(sdl, x + sdl->l->e, y + sdl->l->y - 1) == sdl->colortemp)
-		{
-			sdl->l->n = 1; 
-			l = lstnew(sdl, l->x, l->y - 1);
-			lstadd(&sdl->l, l);
-			pixelm(sdl, l->x, l->y);
-		}
-		/*while (getpixel(sdl, x + sdl->l.x - 1, y + sdl->l.y) == sdl->colortemp)
-		{
-
-		}
-		while (getpixel(sdl, x + sdl->l.x, y + sdl->l.y + 1) == sdl->colortemp)
-		{
-
-		}
-		while (getpixel(sdl, x + sdl->l.x + 1, y + sdl->l.y) == sdl->colortemp)
-		{
-
-		}*/
-	}
-	lstdel(sdl, &l);
-	lstdel(sdl, &sdl->l);
-
-
-	/*if (getpixel(sdl, x, y) == sdl->colortemp) //floodfill 4 ways qui overflow
-	{
-		pixelm(sdl, x, y);
-		floodfill(sdl, x + 1, y);
-		floodfill(sdl, x, y + 1);
-		floodfill(sdl, x - 1, y);
-		floodfill(sdl, x, y - 1);
-	}*/
-}
-
-/*void	floodfills(t_sdl *sdl, int x1, int x2, int y) // recursive scanline
-{
-	int xl, xr;
-	if ((y < 0 || y >= HEIGTH) || (getpixel(sdl, x2, y) == sdl->color))
+	if (!(l = (struct s_list*)malloc(sizeof(struct s_list))))
 		return ;
-	xl = x1;
-	ft_putchar('a');
-	while (xl >= 0)
+	l->next = NULL;
+	l->q = 0;
+	i = 0 ;
+	lstadd(x, y);
+	pixelm(sdl, x, y);
+	SDL_UpdateWindowSurface(sdl->win);
+	//chain list
+	while (l->q) // le compteur
 	{
-	ft_putchar('b');
-		if (getpixel(sdl, xl, y) != sdl->colortemp)
-			break;
-	ft_putchar('c');
-		pixelm(sdl, xl, y);
-		xl--;
-	}
-	if (xl < x1)
-	{
-	ft_putchar('d');
-		floodfills(sdl, xl, x1, y - 1);
-	ft_putchar('e');
-		floodfills(sdl, xl, x1, y + 1);
-	ft_putchar('f');
-		x1++;
-	}
-	xr = x2;
-	ft_putchar('g');
-	while (xr <= WIDTH)
-	{
-	ft_putchar('h');
-		if (getpixel(sdl, xr, y) != sdl->colortemp)
-			break;
-	ft_putchar('i');
-		pixelm(sdl, xr, y);
-		xr++;
-	}
-	ft_putchar('j');
-	if (xr > x2)
-	{
-	ft_putchar('k');
-		floodfills(sdl, x2, xr, y - 1);
-	ft_putchar('l');
-		floodfills(sdl, x2, xr, y + 1);
-	ft_putchar('m');
-		x2--;
-	}
-	ft_putchar('n');
-	xr = x1;
-	while (xr <= x2 && xr <= WIDTH)
-	{
-	ft_putchar('o');
-		if (getpixel(sdl, xr, y) == sdl->colortemp)
+		if (l->q == 0 && getpixel(sdl, x, y - 1) == sdl->color && getpixel(sdl, x - 1, y) == sdl->color && getpixel(sdl, x, y + 1) == sdl->color && getpixel(sdl, x + 1, y) == sdl->color)
+			break ;
+		printf("maillon q pré-boucle = %d, x = %d, y = %d\n", l->q, l->x, l->y);
+		while (y >= 0) //verif nord
 		{
-	ft_putchar('p');
-			pixelm(sdl, xr, y);
-		}
-		else if (x1 < xr)
-		{
-	ft_putchar('q');
-			floodfills(sdl, x1, xr - 1, y - 1);
-	ft_putchar('r');
-			floodfills(sdl, x1, xr - 1, y + 1);
-	ft_putchar('s');
-			x1 = xr;
-	ft_putchar('t');
-			while (xr <= x2 && xr <= WIDTH)
+			printf("a maillon q = %d, x = %d, y = %d\n", l->q, x, y);
+			if (verif(x, y) == -1)
 			{
-				ft_putchar('u');
-				if (getpixel(sdl, xr, y) == sdl->colortemp)
-				{
-					ft_putchar('v');
-					x1 = xr--;
-					break;
-				}
-				xr++;
+				printf("a break\n");
+				break ;
+			}
+			if (getpixel(sdl, x, y - 1) != sdl->color) //verif couleur pixel actuel
+			{
+				y--;
+				pixelm(sdl, x, y);
+				SDL_UpdateWindowSurface(sdl->win);
+				lstadd(x, y);
+			}
+			if (getpixel(sdl, x, y) == sdl->color || verif(x, y) == -1)
+			{
+				printf("a break fin\n");
+				break ;
 			}
 		}
-		xr++;
+		while (x >= 0) // verif ouest
+		{
+			printf("b maillon q = %d, x = %d, y = %d\n", l->q, l->x, l->y);
+			if (verif(x, y) == -1)
+			{
+				printf("b break\n");
+				break ;
+			}
+			if (getpixel(sdl, x - 1, y) != sdl->color)
+			{
+				x--;
+				pixelm(sdl, x, y);
+				SDL_UpdateWindowSurface(sdl->win);
+				lstadd(x, y);
+			}
+			if (getpixel(sdl, x, y) == sdl->color || verif(x, y) == -1)
+			{
+				printf("b break fin\n");
+				break ;
+			}
+		}
+		while (y <= HEIGTH) // verif sud
+		{
+			printf("c maillon q = %d, x = %d, y = %d\n", l->q, l->x, l->y);
+			if (verif(x, y) == -1)
+			{
+				printf("c break\n");
+				break ;
+			}
+			if (getpixel(sdl, x, y + 1) != sdl->color)
+			{
+				y++;
+				pixelm(sdl, x, y);
+				SDL_UpdateWindowSurface(sdl->win);
+				lstadd(x, y);
+			}
+			if (getpixel(sdl, x, y) == sdl->color || verif(x, y) == -1)
+			{
+				printf("c break fin\n");
+				break ;
+			}
+		}
+		while (x <= WIDTH) // verif est
+		{
+			printf("d maillon q = %d, x = %d, y = %d\n", l->q, l->x, l->y);
+			if (verif(x, y) == -1)
+			{
+				printf("d break\n");
+				break ;
+			}
+			if (getpixel(sdl, x + 1, y) != sdl->color)
+			{
+				x++;
+				pixelm(sdl, x, y);
+				SDL_UpdateWindowSurface(sdl->win);
+				lstadd(x, y);
+			}
+			if (getpixel(sdl, x, y) == sdl->color || verif(x, y) == -1)
+			{
+				printf("d break fin\n");
+				break ;
+			}
+		}
+		printf("début de free\n");
+		while (l != NULL)
+		{
+			if (l->q == 0 || getpixel(sdl, x, y - 1) != sdl->color || getpixel(sdl, x - 1, y) != sdl->color || getpixel(sdl, l->x, l->y + 1) != sdl->color || getpixel(sdl, l->x + 1, l->y) != sdl->color)
+			{
+				if (verif(x, y) == -1)
+					lstdelfirst();
+				printf("break début free\n");
+				break ;
+			}
+			printf("--e maillon q = %d, x = %d, y = %d--\n", l->q, x, y);
+			lstdelfirst();
+			x = l->x;
+			y = l->y;
+			printf("--f maillon q = %d, x = %d, y = %d--\n", l->q, x, y);
+			if (l->q == 0 || getpixel(sdl, x, y - 1) != sdl->color || getpixel(sdl, x - 1, y) != sdl->color || getpixel(sdl, x, y + 1) != sdl->color || getpixel(sdl, x + 1, y) != sdl->color)
+			{
+				printf("break fin de free\n");
+				break ;
+			}
+		}
 	}
-}*/
+	if (l != NULL)
+	{
+		lstdel();
+	}
+}

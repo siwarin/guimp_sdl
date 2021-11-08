@@ -17,7 +17,7 @@ void midPointCircleDraw(t_sdl *sdl, int x_center, int y_center, int r)
 	P = 1 - r;
     sdl->x = r;
 	sdl->y = 0;
-
+    printf("rayon cercle : %d\n", r);
     //pixelm(sdl, sdl->x + x_center, sdl->y + y_center);
      
     if (r > 0)

@@ -21,12 +21,10 @@ SRCS = ft_atoi.c \
 			ft_strrev.c \
 			ft_is_sort.c \
 			ft_strcapitalize.c \
-			ft_lstmap.c \
 			ft_lstiter.c \
 			ft_lstadd.c \
 			ft_lstdel.c \
 			ft_lstdelone.c \
-			ft_lstnew.c \
 			ft_itoa.c \
 			ft_strtrim.c \
 			ft_strmapi.c \
@@ -90,12 +88,10 @@ OBJ = ft_atoi.o \
 	  ft_strrev.o \
 	  ft_is_sort.o \
 	  ft_strcapitalize.o \
-	  ft_lstmap.o \
 	  ft_lstiter.o \
 	  ft_lstadd.o \
 	  ft_lstdel.o \
 	  ft_lstdelone.o \
-	  ft_lstnew.o \
 	  ft_itoa.o \
 	  ft_strtrim.o \
 	  ft_strmapi.o \

@@ -71,7 +71,7 @@ void    main_loop(t_sdl *sdl)
 						case SDLK_ESCAPE:
 							hook_keydown(sdl);
 							break;
-						case SDLK_a:
+						case SDLK_a: // mid-point circle, attention, petit problème si maintiens de l'appui au tracage (pas de crash)
 							sdl->i = 0;
 							break;
 						case SDLK_z:
@@ -80,6 +80,10 @@ void    main_loop(t_sdl *sdl)
 						case SDLK_c:
 							clearscreen(sdl);
 							sdl->i = -1;
+							sdl->k.mx = 0;
+							sdl->k.my = 0;
+							sdl->x = 0;
+							sdl->y = 0;
 							break;
 					}
 
@@ -104,7 +108,6 @@ void    main_loop(t_sdl *sdl)
 					SDL_UpdateWindowSurface(sdl->win);
 				   	break;	
 			}
-
 		}
 	}
 	SDL_UpdateWindowSurface(sdl->win); // Mise à jour de l'écran 
@@ -114,8 +117,6 @@ void    main_loop(t_sdl *sdl)
 int		main(int argc, char **argv)
 {
 	t_sdl	sdl;
-	
-	sdl.l.next = NULL;
 	ft_init(&sdl);
 	main_loop(&sdl);
 	return (0);

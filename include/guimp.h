@@ -3,8 +3,8 @@
 
 # include "../libft/libft.h"
 # include "../SDL2/SDL.h"
-# define WIDTH	1300
-# define HEIGTH	850
+# define WIDTH	650
+# define HEIGTH	400
 
 typedef struct		s_keyboard
 {
@@ -25,17 +25,16 @@ typedef struct		s_fps
 	double	count;
 }			t_fps;
 
-typedef struct		s_list //structure pour floodfill
+/*typedef struct		s_list //structure pour floodfill
 {
 	int n; // north
 	int w; // west
 	int s; // south
 	int e; // east
-	int q; // compteur pour le nombre d'itération
 	int	x; // coordonnées graphique du noeud en question
 	int y;
-	struct t_list *next;
-}					t_list;
+	struct s_list *next;
+}					t_list;*/
 
 typedef struct		s_sdl
 {
@@ -44,7 +43,6 @@ typedef struct		s_sdl
 	SDL_Event	e;
 	t_keyboard	k;
 	t_fps		f;
-	t_list		*l;
 	int		x;
 	int		y;
 	int		color;
@@ -67,18 +65,20 @@ void    main_loop(t_sdl *sdl);
 // pixel.c 
 void	pixel(t_sdl *sdl);
 void	pixelm(t_sdl *sdl, int x, int y);
+Uint32	getpixel(t_sdl *sdl, int x, int y);
 
 // floodfill.c
 void	floodfill(t_sdl *sdl, int x, int y);
-Uint32	getpixel(t_sdl *sdl, int x, int y);
-void    floodfills(t_sdl *sdl, int x1, int x2, int y); // non utilisé
+
+// graphics.c
 void    clearscreen(t_sdl *sdl);
 
-//chainlist.c
-t_list	*lstnew(t_sdl *sdl, int i, int j);
-void	lstadd(t_list **alst, t_list *new);
-void	lstdelone(t_sdl *sdl, t_list **alst);
-void	lstdel(t_sdl *sdl, t_list **alst);
+/*// chainlist.c
+t_list	*lstnew(int i, int j);
+void	lstadd(t_list *l);
+void	lstdelone(t_list *l);
+void	lstdel(t_list *l);
+t_list	*lstdelfirst(t_list *l);*/
 
 // non utilisé
 void	draw(t_sdl *sdl);
