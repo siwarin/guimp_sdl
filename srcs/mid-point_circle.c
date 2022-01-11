@@ -14,6 +14,8 @@ void midPointCircleDraw(t_sdl *sdl, int x_center, int y_center, int r)
 {
 	int P;
 	
+    if (r > WIDTH * 2)
+        return ;
 	P = 1 - r;
     sdl->x = r;
 	sdl->y = 0;

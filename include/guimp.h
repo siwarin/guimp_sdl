@@ -3,8 +3,8 @@
 
 # include "../libft/libft.h"
 # include "../SDL2/SDL.h"
-# define WIDTH	650
-# define HEIGTH	400
+# define WIDTH	1300
+# define HEIGTH	800
 
 typedef struct		s_keyboard
 {

@@ -53,13 +53,13 @@ void	lstdel()
 
 int		verif(int x, int y)
 {
-	if (x < 0 || x > WIDTH || y < 0 || y > HEIGTH)
+	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGTH)
 		return (-1);
 	return (0);
 }
 
 void	floodfill(t_sdl *sdl, int x, int y) // outil pot de peinture (a finir)
-{
+{ // faire une fonction pour dessiner rectangle, floodfill plante topscreen et sors des cercles  
 	int i;
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGTH)
 		return ;
@@ -79,85 +79,89 @@ void	floodfill(t_sdl *sdl, int x, int y) // outil pot de peinture (a finir)
 		if (l->q == 0 && getpixel(sdl, x, y - 1) == sdl->color && getpixel(sdl, x - 1, y) == sdl->color && getpixel(sdl, x, y + 1) == sdl->color && getpixel(sdl, x + 1, y) == sdl->color)
 			break ;
 		printf("maillon q pré-boucle = %d, x = %d, y = %d\n", l->q, l->x, l->y);
-		while (y >= 0) //verif nord
+		while (y >= 0 && verif(x, y - 1) == 0) //verif nord
 		{
 			printf("a maillon q = %d, x = %d, y = %d\n", l->q, x, y);
-			if (verif(x, y) == -1)
+			if (y <= 0)
 			{
-				printf("a break\n");
+				y++;
 				break ;
 			}
 			if (getpixel(sdl, x, y - 1) != sdl->color) //verif couleur pixel actuel
 			{
+				printf("a maillon print\n");
 				y--;
 				pixelm(sdl, x, y);
 				SDL_UpdateWindowSurface(sdl->win);
 				lstadd(x, y);
 			}
-			if (getpixel(sdl, x, y) == sdl->color || verif(x, y) == -1)
+			if (getpixel(sdl, x, y - 1) == sdl->color || verif(x, y - 1) == -1)
 			{
 				printf("a break fin\n");
 				break ;
 			}
 		}
-		while (x >= 0) // verif ouest
+		while (x >= 0 && verif(x - 1, y) == 0) // verif ouest
 		{
 			printf("b maillon q = %d, x = %d, y = %d\n", l->q, l->x, l->y);
-			if (verif(x, y) == -1)
+			/*if (x <= 0)
 			{
-				printf("b break\n");
+				x++;
 				break ;
-			}
+			}*/
 			if (getpixel(sdl, x - 1, y) != sdl->color)
 			{
+				printf("b maillon print\n");
 				x--;
 				pixelm(sdl, x, y);
 				SDL_UpdateWindowSurface(sdl->win);
 				lstadd(x, y);
 			}
-			if (getpixel(sdl, x, y) == sdl->color || verif(x, y) == -1)
+			if (getpixel(sdl, x - 1, y) == sdl->color || verif(x - 1, y) == -1)
 			{
 				printf("b break fin\n");
 				break ;
 			}
 		}
-		while (y <= HEIGTH) // verif sud
+		while (y <= HEIGTH && verif(x, y + 1) == 0) // verif sud
 		{
 			printf("c maillon q = %d, x = %d, y = %d\n", l->q, l->x, l->y);
-			if (verif(x, y) == -1)
+			/*if (y >= HEIGTH)
 			{
-				printf("c break\n");
+				y--;
 				break ;
-			}
+			}*/
 			if (getpixel(sdl, x, y + 1) != sdl->color)
 			{
+				printf("c maillon print\n");
 				y++;
 				pixelm(sdl, x, y);
 				SDL_UpdateWindowSurface(sdl->win);
 				lstadd(x, y);
 			}
-			if (getpixel(sdl, x, y) == sdl->color || verif(x, y) == -1)
+			if (getpixel(sdl, x, y + 1) == sdl->color || verif(x, y + 1) == -1)
 			{
 				printf("c break fin\n");
 				break ;
 			}
 		}
-		while (x <= WIDTH) // verif est
+		while (x <= WIDTH && verif(x + 1, y) == 0) // verif est
 		{
 			printf("d maillon q = %d, x = %d, y = %d\n", l->q, l->x, l->y);
-			if (verif(x, y) == -1)
+			/*if (x <= WIDTH)
 			{
-				printf("d break\n");
+				x--;
 				break ;
-			}
+			}*/
 			if (getpixel(sdl, x + 1, y) != sdl->color)
 			{
+				printf("d maillon print\n");
 				x++;
 				pixelm(sdl, x, y);
 				SDL_UpdateWindowSurface(sdl->win);
 				lstadd(x, y);
 			}
-			if (getpixel(sdl, x, y) == sdl->color || verif(x, y) == -1)
+			if (getpixel(sdl, x + 1, y) == sdl->color || verif(x + 1, y) == -1)
 			{
 				printf("d break fin\n");
 				break ;
@@ -169,7 +173,12 @@ void	floodfill(t_sdl *sdl, int x, int y) // outil pot de peinture (a finir)
 			if (l->q == 0 || getpixel(sdl, x, y - 1) != sdl->color || getpixel(sdl, x - 1, y) != sdl->color || getpixel(sdl, l->x, l->y + 1) != sdl->color || getpixel(sdl, l->x + 1, l->y) != sdl->color)
 			{
 				if (verif(x, y) == -1)
+				{
+					printf("verif passée\n");
 					lstdelfirst();
+					x = l->x;
+					y = l->y;
+				}
 				printf("break début free\n");
 				break ;
 			}
